@@ -39,6 +39,16 @@ public class PlayerContoller : MonoBehaviour
     //剛体
     private Rigidbody rb;
 
+    //歩きの速度
+    public float walkSpeed = 4f;
+
+    //走りの速度
+    public float runSpeed = 8f;
+
+
+    //カーソルの表示判定
+    private bool cursorLock = true;
+
 
 
     void Start()
@@ -46,7 +56,11 @@ public class PlayerContoller : MonoBehaviour
         //カメラ格納
         //タグがついているとこれだけでとれる。
         cam = Camera.main;
+
         rb = GetComponent<Rigidbody>();
+
+        UpdateCursorLock();
+
         
     }
 
@@ -61,6 +75,11 @@ public class PlayerContoller : MonoBehaviour
         
         //ジャンプ関数の呼び出し
         Jump();
+
+        //走り関数の呼び出し
+        Run();
+
+        UpdateCursorLock();
     }
 
     //視点移動関数
@@ -118,6 +137,33 @@ public class PlayerContoller : MonoBehaviour
     //地面についていればTrue
     public bool IsGround(){
         return Physics.Raycast(groundCheckPoint.position, Vector3.down, 0.25f, groundLayers);
+    }
+
+    //Run関数
+    public void Run(){
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            activeMoveSpeed = runSpeed;
+        }
+        else
+        {
+            activeMoveSpeed = walkSpeed;
+        }
+    }
+
+    public void UpdateCursorLock(){
+        //boolを切り替える
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            cursorLock = false;//表示
+        }else if (Input.GetMouseButton(0)){
+            cursorLock = true;//非表示
+        }
+
+        if(cursorLock){
+            Cursor.lockState = CursorLockMode.Locked;
+        }else {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     private void  LateUpdate()
