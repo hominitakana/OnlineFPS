@@ -18,6 +18,15 @@ public class PlayerContoller : MonoBehaviour
     //カメラ
     private Camera cam;
 
+    //入力された値格納
+    private Vector3 moveDir;
+
+    //進む方向格納
+    private Vector3 movement;
+
+    //移動速度
+    public float activeMoveSpeed = 4f;
+
 
     void Start()
     {
@@ -31,6 +40,9 @@ public class PlayerContoller : MonoBehaviour
     {
         //視点移動関数の呼び出し
         PlayertRotate();
+
+        //移動関数の呼び出し
+        PlayerMove();
     }
 
     //視点移動関数
@@ -55,6 +67,25 @@ public class PlayerContoller : MonoBehaviour
             viewPoint.transform.rotation.eulerAngles.y,
             viewPoint.transform.rotation.eulerAngles.z);
             
+    }
+
+    //移動関数
+    public void PlayerMove(){
+
+        //移動用キーの入力を検知して値を格納する
+        moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0,
+            Input.GetAxisRaw("Vertical"));
+
+
+        //正規化
+        //ベクトルの向きを変えずに値を小さくする。
+        //正規化して指定の数値をかければ、移動スピードの制御が簡単にできるため。
+        //進む方向を出して変数に格納
+        movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized;
+
+        transform.position += movement * activeMoveSpeed* Time.deltaTime;
+
+
     }
 
     private void  LateUpdate()
