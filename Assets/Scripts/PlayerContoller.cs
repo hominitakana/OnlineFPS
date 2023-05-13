@@ -27,12 +27,27 @@ public class PlayerContoller : MonoBehaviour
     //移動速度
     public float activeMoveSpeed = 4f;
 
+    //ジャンプ力
+    public Vector3 jumpForce = new Vector3(0, 6, 0);
+
+    //レイを飛ばすオブジェクトの位置
+    public Transform groundCheckPoint;
+
+    //地面レイヤー
+    public LayerMask groundLayers;
+
+    //剛体
+    private Rigidbody rb;
+
+
 
     void Start()
     {
         //カメラ格納
         //タグがついているとこれだけでとれる。
         cam = Camera.main;
+        rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -43,6 +58,9 @@ public class PlayerContoller : MonoBehaviour
 
         //移動関数の呼び出し
         PlayerMove();
+        
+        //ジャンプ関数の呼び出し
+        Jump();
     }
 
     //視点移動関数
@@ -84,8 +102,22 @@ public class PlayerContoller : MonoBehaviour
         movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized;
 
         transform.position += movement * activeMoveSpeed* Time.deltaTime;
+        //Time.deltaTimeをかけるのはパソコン間でスペックの差がでないようにするため
 
 
+    }
+
+    //ジャンプ関数
+    //地面についてる＋space
+    public void Jump(){
+        if(IsGround() && Input.GetKeyDown(KeyCode.Space)){
+            rb.AddForce(jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    //地面についていればTrue
+    public bool IsGround(){
+        return Physics.Raycast(groundCheckPoint.position, Vector3.down, 0.25f, groundLayers);
     }
 
     private void  LateUpdate()
