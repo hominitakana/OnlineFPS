@@ -1039,6 +1039,7 @@ GameObject:
   - component: {fileID: 5464105833520937451}
   - component: {fileID: 8969970733504050766}
   - component: {fileID: 6602078671773123204}
+  - component: {fileID: 8969970733504050767}
   m_Layer: 0
   m_Name: pistol1
   m_TagString: Untagged
@@ -1187,6 +1188,7 @@ GameObject:
   - component: {fileID: 7266492377768762263}
   - component: {fileID: 6014592229798220850}
   - component: {fileID: 8402846700408037624}
+  - component: {fileID: 8402846700408037625}
   m_Layer: 0
   m_Name: assault1
   m_TagString: Untagged
@@ -1205,6 +1207,7 @@ GameObject:
   - component: {fileID: 9206192136726375311}
   - component: {fileID: 5218877491742958634}
   - component: {fileID: 8037194859910402272}
+  - component: {fileID: 9206192136726375312}
   m_Layer: 0
   m_Name: shotgun1
   m_TagString: Untagged
@@ -1254,6 +1257,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8402846700408037625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8042326115484549421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d85011c9167564eaf0dbbd984b79f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootInterval: 0.1
+  shotDamage: 10
+  adsZoom: 35
+  adsSpeed: 7
 --- !u!33 &8969970733504050766
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1262,6 +1281,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4656642723910509393}
   m_Mesh: {fileID: -805959276040964406, guid: 4df3ce82db8e66645afd54ab1d5b0262, type: 3}
+--- !u!114 &8969970733504050767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656642723910509393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d85011c9167564eaf0dbbd984b79f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootInterval: 0.35
+  shotDamage: 10
+  adsZoom: 30
+  adsSpeed: 10
 --- !u!4 &9206192136726375311
 Transform:
   m_ObjectHideFlags: 0
@@ -1277,3 +1312,19 @@ Transform:
   m_Father: {fileID: 275628602}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9206192136726375312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397285123789271349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d85011c9167564eaf0dbbd984b79f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootInterval: 1.2
+  shotDamage: 50
+  adsZoom: 30
+  adsSpeed: 5
