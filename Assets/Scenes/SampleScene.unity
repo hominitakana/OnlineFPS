@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 256006900}
   - component: {fileID: 256006899}
   - component: {fileID: 256006898}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 559781342}
   - component: {fileID: 559781341}
   - component: {fileID: 559781340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 669735967}
   - component: {fileID: 669735966}
   - component: {fileID: 669735965}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 725752290}
   - component: {fileID: 725752289}
   - component: {fileID: 725752288}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 1115485586}
   - component: {fileID: 1115485585}
   - component: {fileID: 1115485584}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,6 +855,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e0cf76188c6524e840bc6c7f1cbf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewPoint: {fileID: 1163770758}
+  mouseSensitivity: 1
+  activeMoveSpeed: 4
+  jumpForce: {x: 0, y: 6, z: 0}
+  groundCheckPoint: {fileID: 1426793929}
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  walkSpeed: 4
+  runSpeed: 8
 --- !u!54 &1245185461
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -869,7 +879,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1245185462
 CapsuleCollider:

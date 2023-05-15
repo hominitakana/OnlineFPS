@@ -18,7 +18,7 @@ public class PlayerContoller : MonoBehaviour
     //カメラ
     private Camera cam;
 
-    //入力された値格納
+    //入力された移動値格納
     private Vector3 moveDir;
 
     //進む方向格納
@@ -127,8 +127,8 @@ public class PlayerContoller : MonoBehaviour
     }
 
     //ジャンプ関数
-    //地面についてる＋space
     public void Jump(){
+        //地面についているかつスペースが押されたときにジャンプ
         if(IsGround() && Input.GetKeyDown(KeyCode.Space)){
             rb.AddForce(jumpForce, ForceMode.Impulse);
         }
@@ -165,12 +165,11 @@ public class PlayerContoller : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
-
+    //Updateが呼び出された後に呼び出される
     private void  LateUpdate()
     {   
         //カメラの位置調整
         cam.transform.position = viewPoint.position;
-
         //回転
         cam.transform.rotation = viewPoint.rotation;
     }
