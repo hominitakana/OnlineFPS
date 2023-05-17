@@ -86,6 +86,9 @@ public class PlayerContoller : MonoBehaviour
             
         }
 
+        // 覗き込み関数の呼び出し
+        Aim();
+
         //武器の変更キー検知関数
         SwitchingGuns();
 
@@ -159,6 +162,7 @@ public class PlayerContoller : MonoBehaviour
         return Physics.Raycast(groundCheckPoint.position, Vector3.down, 0.25f, groundLayers);
     }
 
+
     //Run関数
     public void Run(){
         if (Input.GetKey(KeyCode.LeftShift))
@@ -170,6 +174,8 @@ public class PlayerContoller : MonoBehaviour
             activeMoveSpeed = walkSpeed;
         }
     }
+
+
     //カーソルのロックの入り切り関数
     public void UpdateCursorLock(){
         //boolを切り替える
@@ -185,6 +191,7 @@ public class PlayerContoller : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
+
 
     //武器の変更キー検知関数
     public void SwitchingGuns(){
@@ -234,5 +241,18 @@ public class PlayerContoller : MonoBehaviour
         }
     }
 
+    public void Aim(){
+        // 右クリックの検知
+        if(Input.GetMouseButton(1)){
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView,
+                                        guns[selectedGun].adsZoom,
+                                        guns[selectedGun].adsSpeed* Time.deltaTime);
+        }
+        else{
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView,
+                                        60,
+                                        guns[selectedGun].adsSpeed* Time.deltaTime);
+        }
+    }
 
 }
