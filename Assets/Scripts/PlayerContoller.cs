@@ -211,6 +211,19 @@ public class PlayerContoller : MonoBehaviour
 
             switchGun();
         }
+
+        //数値キーの入力検知で武器を切り替える
+        for (int i = 0; i < guns.Count; i++)
+        {
+            if (Input.GetKeyDown((i + 1).ToString()))//ループの数値＋１をして文字列に変換。その後、押されたか判定
+            {
+                selectedGun = i;//銃を扱う数値を設定
+
+                //実際に武器を切り替える関数
+                switchGun();
+
+            }
+        }
     }
 
     void switchGun(){
