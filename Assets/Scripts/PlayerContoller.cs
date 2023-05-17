@@ -49,6 +49,11 @@ public class PlayerContoller : MonoBehaviour
     //カーソルの表示判定
     private bool cursorLock = true;
 
+    // 武器の格納リスト
+    public List<Gun> guns = new List<Gun>();
+    // 選択中の武器管理用数値
+    private int selectedGun = 0;
+
 
 
     void Start()
@@ -73,11 +78,16 @@ public class PlayerContoller : MonoBehaviour
         //移動関数の呼び出し
         PlayerMove();
         
-        //ジャンプ関数の呼び出し
-        Jump();
+        if(IsGround()){
+            //ジャンプ関数の呼び出し
+            Jump();
+            //走り関数の呼び出し
+            Run();
+            
+        }
 
-        //走り関数の呼び出し
-        Run();
+        //武器の変更キー検知関数
+        SwitchingGuns();
 
         UpdateCursorLock();
     }
@@ -126,6 +136,16 @@ public class PlayerContoller : MonoBehaviour
 
     }
 
+    //Updateが呼び出された後に呼び出される
+    private void  LateUpdate()
+    {   
+        //カメラの位置調整
+        cam.transform.position = viewPoint.position;
+        //回転
+        cam.transform.rotation = viewPoint.rotation;
+    }
+
+
     //ジャンプ関数
     public void Jump(){
         //地面についているかつスペースが押されたときにジャンプ
@@ -150,7 +170,7 @@ public class PlayerContoller : MonoBehaviour
             activeMoveSpeed = walkSpeed;
         }
     }
-
+    //カーソルのロックの入り切り関数
     public void UpdateCursorLock(){
         //boolを切り替える
         if(Input.GetKeyDown(KeyCode.Escape)){
@@ -165,13 +185,40 @@ public class PlayerContoller : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
-    //Updateが呼び出された後に呼び出される
-    private void  LateUpdate()
-    {   
-        //カメラの位置調整
-        cam.transform.position = viewPoint.position;
-        //回転
-        cam.transform.rotation = viewPoint.rotation;
+
+    //武器の変更キー検知関数
+    public void SwitchingGuns(){
+        // ホイールくるくるで銃の切り替え
+        if(Input.GetAxisRaw("Mouse ScrollWheel") > 0f){
+            selectedGun++;
+
+            // リストより大きい数値になっていないか確認
+            if (selectedGun >= guns.Count)
+            {
+                selectedGun = 0;
+            }
+
+            switchGun();
+        }
+        else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0f){
+            selectedGun--;
+
+            if(selectedGun < 0){
+
+                //0より小さければリストの最大値-1に設定する
+                selectedGun = guns.Count -1;
+            }
+
+            switchGun();
+        }
+    }
+
+    void switchGun(){
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].gameObject.SetActive(i == selectedGun);
+
+        }
     }
 
 
