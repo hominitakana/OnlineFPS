@@ -23,6 +23,7 @@ public class GunController : MonoBehaviour
     [Tooltip("マガジンに入る最大の数")]
     public int[] maxAmmoClip;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +44,9 @@ public class GunController : MonoBehaviour
 
         //射撃関数
         Fire();
+
+        //リロード関数を呼ぶ
+        Reload();
     }
 
     
@@ -140,7 +144,7 @@ public class GunController : MonoBehaviour
 
             // 弾痕を当たった場所に生成する
             GameObject bulletImpactObject = Instantiate(guns[selectedGun].bulletImpactObject,
-                hit.point + (hit.normal * 0.02f), //rayが当たった場所
+                hit.point + (hit.normal * 0.02f), //rayが当たった場所 エフェクトがちらつかないように + (hit.normal * 0.02f)
                 Quaternion.LookRotation(hit.normal,Vector3.up));// Quaternion LookRotation (Vector3 forward, Vector3 upwards= Vector3.up) 指定された forward と upwards 方向に回転します。
                 //hit.normal: rayが当たった面から出る法線
                 //Vector3.up: y軸が↑方向
@@ -154,5 +158,24 @@ public class GunController : MonoBehaviour
 
     }
 
-    
+    private void Reload()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            //リロードで補充する弾数を取得する
+            int amountNeed = maxAmmoClip[selectedGun] - ammoClip[selectedGun];
+
+            //必要な弾薬量と所持弾薬量を比較
+            int ammoAvailable = amountNeed < ammunition[selectedGun] ? amountNeed : ammunition[selectedGun];
+
+            //弾薬が満タンの時はリロードできない&弾薬を所持しているとき
+            if (amountNeed != 0 && ammunition[selectedGun] != 0)
+            {
+                //所持弾薬からリロードする弾薬分を引く
+                ammunition[selectedGun] -= ammoAvailable;
+                //銃に装填する
+                ammoClip[selectedGun] += ammoAvailable;
+            }
+        }
+    }
 }
