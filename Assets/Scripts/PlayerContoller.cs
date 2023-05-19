@@ -51,7 +51,13 @@ public class PlayerContoller : MonoBehaviour
     //カーソルの表示判定
     private bool cursorLock = true;
 
+    private SpawnManager spawnManager;
 
+    private void Awake()
+    {
+        //タグからSpawnManagerを探す
+        spawnManager = GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SpawnManager>();
+    }
 
 
 
@@ -66,6 +72,7 @@ public class PlayerContoller : MonoBehaviour
         //カメラ格納
         //タグがついているとこれだけでとれる。
         cam = Camera.main;
+        transform.position = spawnManager.GetSpawnPoint().position;
     }
 
     // Update is called once per frame
