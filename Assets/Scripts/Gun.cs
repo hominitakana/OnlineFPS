@@ -19,6 +19,10 @@ public class Gun : MonoBehaviour
     //覗き込む時の速度
     [Tooltip("覗き込む時の速度")]//補足説明
     public float adsSpeed;
+
+    // 弾痕オブジェクト
+    public GameObject bulletImpactObject;
+
     // Start is called before the first frame update
     void Start()
     {

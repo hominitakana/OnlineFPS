@@ -13,7 +13,15 @@ public class GunController : MonoBehaviour
     // 選択中の武器管理用数値
     private int selectedGun = 0;
 
-
+    private float shotTimer;//射撃間隔
+    [Tooltip("所持弾薬")]
+    public int[] ammunition;
+    [Tooltip("最高所持弾薬数")]
+    public int[] maxAmmunition;
+    [Tooltip("マガジン内の弾数")]
+    public int[] ammoClip;
+    [Tooltip("マガジンに入る最大の数")]
+    public int[] maxAmmoClip;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +40,9 @@ public class GunController : MonoBehaviour
 
         //武器の変更キー検知関数
         SwitchingGuns();
+
+        //射撃関数
+        Fire();
     }
 
     
@@ -96,4 +107,48 @@ public class GunController : MonoBehaviour
                                         guns[selectedGun].adsSpeed* Time.deltaTime);
         }
     }
+
+    /// <summary>
+    /// 左クリックの検知
+    /// </summary>
+    public void Fire()
+    {
+        
+        if (Input.GetMouseButton(0) && ammoClip[selectedGun] > 0 && Time.time > shotTimer)
+        {
+            FiringBullet();
+        }
+
+    }
+
+    /// <summary>
+    /// 弾丸の発射
+    /// </summary>
+    private void FiringBullet()
+    {
+        //選択中の銃の弾薬減らす
+        ammoClip[selectedGun]--;
+
+        //Ray(光線)をカメラの中央からに設定
+        Ray ray = cam.ViewportPointToRay(new Vector2(.5f, .5f));//カメラの中心がこの数値
+
+
+        //レイを飛ばす（開始地点と方向、当たったコライダーの情報格納）
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            // Debug.Log("当たったオブジェクトは" + hit.collider.gameObject.name);
+
+            // 弾痕を当たった場所に生成する
+            GameObject bulletImpactObject = Instantiate(guns[selectedGun].bulletImpactObject,
+                hit.point, //rayが当たった場所
+                Quaternion.LookRotation(hit.normal,Vector3.up));//
+        }
+
+        //射撃間隔を設定
+        shotTimer = Time.time + guns[selectedGun].shootInterval;
+
+
+    }
+
+    
 }
