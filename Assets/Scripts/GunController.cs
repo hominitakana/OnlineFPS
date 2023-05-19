@@ -23,6 +23,12 @@ public class GunController : MonoBehaviour
     [Tooltip("マガジンに入る最大の数")]
     public int[] maxAmmoClip;
 
+    UIManager uIManager;//UI管理
+    private void Awake()
+    {
+        //タグからUIManagerを探す
+        uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +36,9 @@ public class GunController : MonoBehaviour
         //カメラ格納
         //タグがついているとこれだけでとれる。
         cam = Camera.main;
+
+        //弾薬テキスト更新
+        uIManager.SettingBulletsText(ammoClip[selectedGun], ammunition[selectedGun]);
 
     }
 
@@ -49,6 +58,12 @@ public class GunController : MonoBehaviour
         Reload();
     }
 
+    //初期設定では0.02秒ごとに呼ばれる
+    private void FixedUpdate()
+    {
+        //弾薬テキスト更新
+        uIManager.SettingBulletsText(ammoClip[selectedGun], ammunition[selectedGun]);
+    }
     
     //武器の変更キー検知関数
     public void SwitchingGuns(){
