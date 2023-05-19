@@ -140,8 +140,12 @@ public class GunController : MonoBehaviour
 
             // 弾痕を当たった場所に生成する
             GameObject bulletImpactObject = Instantiate(guns[selectedGun].bulletImpactObject,
-                hit.point, //rayが当たった場所
-                Quaternion.LookRotation(hit.normal,Vector3.up));//
+                hit.point + (hit.normal * 0.02f), //rayが当たった場所
+                Quaternion.LookRotation(hit.normal,Vector3.up));// Quaternion LookRotation (Vector3 forward, Vector3 upwards= Vector3.up) 指定された forward と upwards 方向に回転します。
+                //hit.normal: rayが当たった面から出る法線
+                //Vector3.up: y軸が↑方向
+
+            Destroy(bulletImpactObject,10f);
         }
 
         //射撃間隔を設定
