@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun; //ライブラリの追加
+using Photon.Realtime;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {   
@@ -13,6 +15,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public Text LoadingText;
 
     public GameObject buttons;
+
+    public GameObject creatRoomPanel;
+    public Text enterRoomName;
 
     private void Awake() {
         instance = this;
@@ -40,6 +45,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void CloseMenuUI(){
         loagingPanel.SetActive(false);
         buttons.SetActive(false);
+        creatRoomPanel.SetActive(false);
     }
 
     public void LobbyMenuDisplay(){
@@ -64,5 +70,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         LobbyMenuDisplay();
     }
 
+    // ルームを作るボタン用のUI
+    public void OpenCreatRoomPanel(){
+        CloseMenuUI();
+        creatRoomPanel.SetActive(true);
+    }
+
+    // ルーム作成ボタン用の関数
+    public void CreatRoomButton(){
+        //入力されていない場合True
+        if (!string.IsNullOrEmpty(enterRoomName.text))
+        {
+            RoomOptions options = new RoomOptions();
+            options.MaxPlayers = 8;
+
+            // ルーム作成
+            PhotonNetwork.CreateRoom(enterRoomName.text,options);
+            CloseMenuUI();
+
+            LoadingText.text = "ルーム作成中...";
+            loagingPanel.SetActive(true);
+        }
+    }
 
 }
