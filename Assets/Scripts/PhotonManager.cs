@@ -25,6 +25,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public GameObject roomPanel;//ルームパネル
     public Text roomName;//ルーム名テキスト
 
+    public GameObject errorPanel;//エラーパネル
+    public Text errorText;//エラーテキスト
+
 
     private void Awake()
     {
@@ -62,6 +65,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         createRoomPanel.SetActive(false);//ルーム作成パネル
         
         roomPanel.SetActive(false);//ルームパネル
+
+        errorPanel.SetActive(false);//エラーパネル
     }
 
 
@@ -136,5 +141,34 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomPanel.SetActive(true);//ルームパネル表示
 
         roomName.text = PhotonNetwork.CurrentRoom.Name;//現在いるルームを取得し、テキストにルーム名を反映
+    }
+
+    //退出ボタン押下時に呼ばれる。参加中の部屋を抜ける
+    public void LeavRoom()
+    {
+        //現在のルームを出て、マスターサーバーに戻って、ルームに参加したりルームを作成したりできます
+        PhotonNetwork.LeaveRoom();
+
+        CloseMenuUI();
+
+        loadingText.text = "退出中・・・";
+        loadingPanel.SetActive(true);
+    }
+
+
+    //ルームを抜けたときに呼ばれる
+    public override void OnLeftRoom()
+    {
+        LobbyMenuDisplay();
+    }
+
+    //エラーが出た時に呼ばれる
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        //UIの表示を変える
+        CloseMenuUI();
+        errorText.text = "ルームの作成に失敗しました" + message;
+
+        errorPanel.SetActive(true);
     }
 }
